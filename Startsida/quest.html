@@ -80,12 +80,15 @@
     const userStatus = document.getElementById("userStatus");
 
     let quests = [
-      { id:1,img:"Halloween-Picture-1.png",code:"spöke123" },
+      { id:1,img:"Halloween-Picture-1.png",code:"7206" },
       { id:2,img:"Halloween-Picture-2.png",code:"pumpa321" },
       { id:3,img:"Halloween-Picture-3.png",code:"magi555" },
       { id:4,img:"Halloween-Picture-4.png",code:"bat999" },
       { id:5,img:"Halloween-Picture-5.png",code:"katt666" }
     ];
+
+    // Här kan du själv ändra vilka quests som är upplåsta (array med quest id:n)
+    let unlockedQuests = [1]; // Quest 1 är upplåst, 2-5 är låsta
 
     let isLoggedIn = false;
 
@@ -121,27 +124,24 @@
     function initQuests(){
       const questContainer = document.getElementById("questContainer");
       questContainer.innerHTML = "";
+
       const completed = JSON.parse(localStorage.getItem("completedQuests") || "[]");
 
-      quests.forEach((q, index) => {
+      quests.forEach((q) => {
         const div = document.createElement("div");
         div.className="quest";
 
-        // Låst om föregående quest inte klarats
-        let locked = index > 0 && !completed.includes(quests[index-1].id);
         let status = completed.includes(q.id) ? "✅ Avklarat" :
-                     locked ? "🔒 Låst" :
-                     `<button onclick="openQuest(${q.id})">Gör Quest</button>`;
+                     unlockedQuests.includes(q.id) ? `<button onclick="openQuest(${q.id})">Gör Quest</button>` :
+                     "🔒 Låst";
 
         div.innerHTML=`<img src="${q.img}" alt="Quest ${q.id}"><p id="status-${q.id}">${status}</p>`;
         questContainer.appendChild(div);
       });
 
       window.openQuest = function(id){
-        const idx = quests.findIndex(q=>q.id===id);
-        const completed = JSON.parse(localStorage.getItem("completedQuests")||"[]");
-        if(idx>0 && !completed.includes(quests[idx-1].id)){
-          alert("Du måste klara föregående quest först!");
+        if(!unlockedQuests.includes(id)){
+          alert("Denna quest är låst!");
           return;
         }
 
@@ -159,13 +159,12 @@
         const input=document.getElementById("questCodeInput");
         const id=parseInt(input.dataset.id);
         const quest=quests.find(q=>q.id===id);
-        if(input.value.trim().toLowerCase()===quest.code.toLowerCase()){
+        if(input.value.trim()===quest.code){
           const done=JSON.parse(localStorage.getItem("completedQuests")||"[]");
           if(!done.includes(id)) done.push(id);
           localStorage.setItem("completedQuests",JSON.stringify(done));
           document.getElementById("status-"+id).innerHTML="✅ Avklarat";
           closePopup();
-          initQuests(); // uppdatera status på quests
         } else { alert("Fel kod! Försök igen."); }
       };
     }
