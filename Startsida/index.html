@@ -16,6 +16,8 @@
     .halloween-text { color: #ff6f00; }
     .halloween-accent { background-color: #2d0b00; color: #ff6f00; }
     .halloween-hover:hover { background-color: #ff6f00; color: #2d0b00; }
+    .hidden-code { color: #ff6f00; opacity: 0.15; font-size: 0.9rem; transition: opacity 0.4s; }
+    .hidden-code:hover { opacity: 1; }
   </style>
 </head>
 <body class="bg-gray-900 text-orange-100 font-sans antialiased">
@@ -106,6 +108,9 @@
     </div>
     <p class="text-orange-200 mt-4">support@windskore.se</p>
     <p class="text-orange-300 mt-6">©2025 Windskore.</p>
+
+    <!-- Hemlig kod för Quest 1 -->
+    <p class="hidden-code mt-4 select-none">🕸️ Kod: 7206 🕸️</p>
   </div>
 </footer>
 
@@ -143,8 +148,7 @@ const badgeText = document.getElementById("badgeText");
 
 let userId = null;
 let completedQuests = [];
-
-const allQuestIds = [1,2,3,4,5]; // Samtliga quests
+const allQuestIds = [1,2,3,4,5];
 
 onAuthStateChanged(auth, async (user)=>{
   if(user){
@@ -153,7 +157,6 @@ onAuthStateChanged(auth, async (user)=>{
     accountPopup.classList.add("hidden");
     userId = user.uid;
 
-    // Hämta quest progress
     const docRef = doc(db,"users",user.uid);
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
@@ -203,7 +206,6 @@ accountBtn.addEventListener("click", ()=>accountPopup.classList.remove("hidden")
 closePopup.addEventListener("click", ()=>accountPopup.classList.add("hidden"));
 accountPopup.addEventListener("click",(e)=>{ if(e.target===accountPopup) accountPopup.classList.add("hidden"); });
 
-// Blockera quest-länk om ej inloggad
 questLink.addEventListener("click",(e)=>{
   if(!userId){
     e.preventDefault();
@@ -214,4 +216,3 @@ questLink.addEventListener("click",(e)=>{
 
 </body>
 </html>
-
