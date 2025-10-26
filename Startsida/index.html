@@ -7,10 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
     .hover-scale { transition: transform 0.3s ease; }
     .hover-scale:hover { transform: scale(1.05); }
@@ -32,172 +29,160 @@
       <a href="#games" class="text-orange-300 hover:text-orange-500 transition-colors">Spel</a>
       <a href="#development" class="text-orange-300 hover:text-orange-500 transition-colors">Utveckling</a>
       <a href="quest.html" id="halloweenQuest" class="text-orange-300 hover:text-orange-500 transition-colors">🎃 Halloween Quest</a>
-      <!-- Login Icon -->
       <button id="accountBtn" class="text-orange-300 hover:text-orange-500 transition-colors text-2xl">👤</button>
     </div>
   </div>
 </nav>
 
-<script>
-  // Kontrollera om användaren är inloggad innan man går till Halloween Quest
-  const accountBtn = document.getElementById('accountBtn');
+<!-- Account Popup -->
+<div id="accountPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-gray-800 p-6 rounded-lg relative w-96">
+    <button id="closePopup" class="absolute top-2 right-2 text-orange-400 text-xl font-bold">&times;</button>
+    <h2 class="text-2xl font-bold mb-4 text-orange-300">Skapa konto / Logga in</h2>
+    <input id="email" type="email" placeholder="E-post" class="w-full p-3 mb-4 rounded bg-gray-700 text-white">
+    <input id="password" type="password" placeholder="Lösenord" class="w-full p-3 mb-4 rounded bg-gray-700 text-white">
+    <div class="flex justify-between">
+      <button id="registerBtn" class="px-4 py-2 rounded bg-orange-600 hover:bg-orange-700 transition">Skapa konto</button>
+      <button id="loginBtn" class="px-4 py-2 rounded bg-orange-600 hover:bg-orange-700 transition">Logga in</button>
+    </div>
+    <p id="statusMsg" class="mt-4 text-orange-300"></p>
+    <button id="logoutBtn" class="px-4 py-2 rounded bg-orange-600 hover:bg-orange-700 transition hidden mt-4">Logga ut</button>
+  </div>
+</div>
+
+<!-- Home Section -->
+<section id="home" class="min-h-screen flex items-center justify-center bg-gradient-hero pt-16">
+  <div class="container mx-auto text-center px-4 animate-fade-in">
+    <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">Välkommen till Windskore</h2>
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-orange-200">Dyk in i en värld av äventyr!</p>
+    <a href="#games" class="inline-block bg-orange-600 px-8 py-4 rounded-full text-lg hover-scale hover:bg-orange-700 transition-all">Utforska våra spel</a>
+  </div>
+</section>
+
+<!-- Games Section -->
+<section id="games" class="py-20 bg-gray-900">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12">Spel</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-800 rounded-xl overflow-hidden card-shadow hover-scale animate-fade-in">
+        <div class="h-48 bg-gradient-to-r from-orange-700 to-purple-900"></div>
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold mb-3">Island Of Vehicles</h3>
+          <p class="text-orange-200 mb-4">Windskores kommande spel är under utveckling!</p>
+          <a href="/Island-Of-Vehicles" class="inline-block bg-orange-600 px-6 py-2 rounded-full hover:bg-orange-700 transition">Få Notis Vid Release</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Development Images Section -->
+<section id="development" class="py-20 bg-gray-800">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12">Utvecklingsbilder</h2>
+    <p class="text-xl text-orange-200 text-center mb-12 max-w-3xl mx-auto">Här är några bilder från spelutvecklingsprocessen för Island Of Vehicles.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-gray-800 rounded-xl overflow-hidden card-shadow hover-scale animate-fade-in">
+        <img src="" alt="Utvecklingsbild 1" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold mb-3">Koncept av villaområde</h3>
+          <p class="text-orange-200 mb-4">En tidig konceptbild av ett villaområde.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8">
+  <div class="container mx-auto px-4 text-center">
+    <h3 class="text-2xl font-bold mb-4">Windskore</h3>
+    <p class="text-orange-200 mb-4">Hedemora</p>
+    <div class="space-x-4">
+      <a href="Terms-Of-Service.html" class="text-orange-200 hover:text-orange-400 transition-colors">Terms Of Service</a>
+      <a href="https://docs.google.com/document/d/1QdNGmLffcUuZu21qLqdQPWm4gd0VK0EbiEBbaqy8BbU/edit?usp=sharing" class="text-orange-200 hover:text-orange-400 transition-colors">Sekretesspolicy</a>
+    </div>
+    <p class="text-orange-200 mt-4">support@windskore.se</p>
+    <p class="text-orange-300 mt-6">©2025 Windskore.</p>
+  </div>
+</footer>
+
+<!-- Firebase Auth -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBp9mtBNZAt4PLVPV0ReJ1TmdhfsuArXZI",
+    authDomain: "windskore.firebaseapp.com",
+    projectId: "windskore",
+    storageBucket: "windskore.firebasestorage.app",
+    messagingSenderId: "894555057184",
+    appId: "1:894555057184:web:ae683773015933f6db2045",
+    measurementId: "G-CMJ31ZN3F6"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const registerBtn = document.getElementById("registerBtn");
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const statusMsg = document.getElementById("statusMsg");
+  const accountBtn = document.getElementById("accountBtn");
+  const accountPopup = document.getElementById("accountPopup");
+  const closePopup = document.getElementById("closePopup");
   const questLink = document.getElementById('halloweenQuest');
 
-  questLink.addEventListener('click', (e) => {
-    const loggedIn = localStorage.getItem("loggedInUser");
-    if (!loggedIn) {
-      e.preventDefault();
-      alert("Du måste vara inloggad för att nå denna sida.");
+  let isLoggedIn = false;
+
+  onAuthStateChanged(auth, (user) => {
+    if(user){
+      isLoggedIn = true;
+      logoutBtn.classList.remove("hidden");
+      statusMsg.textContent = `Du är inloggad som ${user.email}`;
+    } else {
+      isLoggedIn = false;
+      logoutBtn.classList.add("hidden");
+      statusMsg.textContent = "";
     }
   });
 
-  // Gubben 👤 öppnar popup-login
-  const loginPopup = document.getElementById("account"); // Den popup vi redan har i index.html
-  accountBtn.addEventListener("click", () => {
-    loginPopup.style.display = "block";
+  registerBtn.addEventListener("click", async () => {
+    try { await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value); statusMsg.textContent="✅ Konto skapat! Du är nu inloggad."; }
+    catch(error){ statusMsg.textContent="❌ "+error.message; }
   });
+
+  loginBtn.addEventListener("click", async () => {
+    try { await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value); statusMsg.textContent="✅ Inloggad!"; }
+    catch(error){ statusMsg.textContent="❌ "+error.message; }
+  });
+
+  logoutBtn.addEventListener("click", async () => { await signOut(auth); statusMsg.textContent="👋 Du är nu utloggad."; });
+
+  // Popup toggle
+  accountBtn.addEventListener("click", ()=>accountPopup.classList.remove("hidden"));
+  closePopup.addEventListener("click", ()=>accountPopup.classList.add("hidden"));
+  accountPopup.addEventListener("click",(e)=>{ if(e.target===accountPopup) accountPopup.classList.add("hidden"); });
+
+  // Halloween Quest check
+  questLink.addEventListener('click',(e)=>{ if(!isLoggedIn){ e.preventDefault(); alert("Du måste vara inloggad för att nå denna sida."); } });
 </script>
 
-  <!-- Home Section -->
-  <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-hero pt-16">
-    <div class="container mx-auto text-center px-4 animate-fade-in">
-      <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">Välkommen till Windskore</h2>
-      <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-orange-200">Dyk in i en värld av äventyr!</p>
-      <a href="#games" class="inline-block bg-orange-600 px-8 py-4 rounded-full text-lg hover-scale hover:bg-orange-700 transition-all">Utforska våra spel</a>
-    </div>
-  </section>
-
-  <!-- Games Section -->
-  <section id="games" class="py-20 bg-gray-900">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12">Spel</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-gray-800 rounded-xl overflow-hidden card-shadow hover-scale animate-fade-in">
-          <div class="h-48 bg-gradient-to-r from-orange-700 to-purple-900"></div>
-          <div class="p-6">
-            <h3 class="text-2xl font-semibold mb-3">Island Of Vehicles</h3>
-            <p class="text-orange-200 mb-4">Windskores kommande spel är under utveckling!</p>
-            <a href="/Island-Of-Vehicles" class="inline-block bg-orange-600 px-6 py-2 rounded-full hover:bg-orange-700 transition">Få Notis Vid Release</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Development Images Section -->
-  <section id="development" class="py-20 bg-gray-800">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12">Utvecklingsbilder</h2>
-      <p class="text-xl text-orange-200 text-center mb-12 max-w-3xl mx-auto">Här är några bilder från spelutvecklingsprocessen för Island Of Vehicles.</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-gray-800 rounded-xl overflow-hidden card-shadow hover-scale animate-fade-in">
-          <img src="" alt="Utvecklingsbild 1" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <h3 class="text-2xl font-semibold mb-3">Koncept av villaområde</h3>
-            <p class="text-orange-200 mb-4">En tidig konceptbild av ett villaområde.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-8">
-    <div class="container mx-auto px-4 text-center">
-      <h3 class="text-2xl font-bold mb-4">Windskore</h3>
-      <p class="text-orange-200 mb-4">Hedemora</p>
-      <div class="space-x-4">
-        <a href="Terms-Of-Service.html" class="text-orange-200 hover:text-orange-400 transition-colors">Terms Of Service</a>
-        <a href="https://docs.google.com/document/d/1QdNGmLffcUuZu21qLqdQPWm4gd0VK0EbiEBbaqy8BbU/edit?usp=sharing" class="text-orange-200 hover:text-orange-400 transition-colors">Sekretesspolicy</a>
-      </div>
-      <p class="text-orange-200 mt-4">support@windskore.se</p>
-      <p class="text-orange-300 mt-6">©2025 Windskore.</p>
-    </div>
-  </footer>
-
-  <!-- Firebase Auth -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBp9mtBNZAt4PLVPV0ReJ1TmdhfsuArXZI",
-      authDomain: "windskore.firebaseapp.com",
-      projectId: "windskore",
-      storageBucket: "windskore.firebasestorage.app",
-      messagingSenderId: "894555057184",
-      appId: "1:894555057184:web:ae683773015933f6db2045",
-      measurementId: "G-CMJ31ZN3F6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const registerBtn = document.getElementById("registerBtn");
-    const loginBtn = document.getElementById("loginBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const statusMsg = document.getElementById("statusMsg");
-
-    registerBtn.addEventListener("click", async () => {
-      try {
-        await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-        statusMsg.textContent = "✅ Konto skapat! Du är nu inloggad.";
-      } catch (error) {
-        statusMsg.textContent = "❌ " + error.message;
-      }
-    });
-
-    loginBtn.addEventListener("click", async () => {
-      try {
-        await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-        statusMsg.textContent = "✅ Inloggad!";
-      } catch (error) {
-        statusMsg.textContent = "❌ " + error.message;
-      }
-    });
-
-    logoutBtn.addEventListener("click", async () => {
-      await signOut(auth);
-      statusMsg.textContent = "👋 Du är nu utloggad.";
-    });
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        logoutBtn.classList.remove("hidden");
-        statusMsg.textContent = `Du är inloggad som ${user.email}`;
-      } else {
-        logoutBtn.classList.add("hidden");
-        statusMsg.textContent = "";
-      }
-    });
-
-    // Popup toggle
-    const accountBtn = document.getElementById("accountBtn");
-    const accountPopup = document.getElementById("accountPopup");
-    const closePopup = document.getElementById("closePopup");
-
-    accountBtn.addEventListener("click", () => accountPopup.classList.remove("hidden"));
-    closePopup.addEventListener("click", () => accountPopup.classList.add("hidden"));
-    accountPopup.addEventListener("click", (e) => {
-      if (e.target === accountPopup) accountPopup.classList.add("hidden");
-    });
-  </script>
-
-  <!-- Tawk.to -->
-  <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/6800b82fc5e333190b5b7845/1ip1cuv4g';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
-    })();
-  </script>
+<!-- Tawk.to -->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6800b82fc5e333190b5b7845/1ip1cuv4g';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+</script>
 
 </body>
-
 </html>
