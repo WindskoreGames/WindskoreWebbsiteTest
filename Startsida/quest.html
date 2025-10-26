@@ -81,6 +81,7 @@
   <h1>🎃 Halloween Quest 🎃</h1>
   <div id="userInfo"></div>
 
+  <!-- Popup för login -->
   <div id="loginPopup" class="popup">
     <div class="popup-content">
       <p>Du måste vara inloggad för att nå denna sida.</p>
@@ -88,8 +89,10 @@
     </div>
   </div>
 
+  <!-- Quest Container -->
   <div class="quest-container" id="questContainer"></div>
 
+  <!-- Quest Popup -->
   <div id="questPopup" class="popup">
     <div class="popup-content">
       <h3 id="questTitle"></h3>
@@ -98,6 +101,16 @@
       <br><br>
       <button id="confirmCodeBtn">Bekräfta</button>
       <button onclick="closePopup()">Stäng</button>
+    </div>
+  </div>
+
+  <!-- Success Popup -->
+  <div id="successPopup" class="popup">
+    <div class="popup-content">
+      <h2>🎉 Grattis! 🎉</h2>
+      <p>Du har klarat alla 5 quests!</p>
+      <p>Maila <strong>support@windskore.se</strong> för att få en 5% rabbatkod som pris.</p>
+      <button onclick="closeSuccessPopup()">Stäng</button>
     </div>
   </div>
 
@@ -128,8 +141,9 @@
     const questInstructions = document.getElementById("questInstructions");
     const confirmCodeBtn = document.getElementById("confirmCodeBtn");
 
-    // Här styr du vilka quests som är upplåsta (lägg till en ny siffra varje dag)
-    let unlockedQuests = [1, 2, 3, 4, 5]; // t.ex. idag 1, imorgon [1,2], osv
+    const successPopup = document.getElementById("successPopup");
+
+    let unlockedQuests = [1, 2, 3, 4, 5];
 
     const quests = [
       { id: 1, img: "Halloween-Picture-1.png", code: "7206" },
@@ -155,6 +169,14 @@
       questPopup.style.display = "none";
     }
 
+    function showSuccessPopup() {
+      successPopup.style.display = "flex";
+    }
+
+    function closeSuccessPopup() {
+      successPopup.style.display = "none";
+    }
+
     confirmCodeBtn.addEventListener("click", async () => {
       if (!currentQuest) return;
       const code = questCodeInput.value.trim();
@@ -162,9 +184,13 @@
         if (!completed.includes(currentQuest.id)) {
           completed.push(currentQuest.id);
           await updateProgress();
-          alert("✅ Quest avklarat!");
           renderQuests();
           closePopup();
+
+          // Visa popup endast om alla quests är klara
+          if (completed.length === quests.length) {
+            showSuccessPopup();
+          }
         }
       } else {
         alert("❌ Fel kod! Försök igen.");
