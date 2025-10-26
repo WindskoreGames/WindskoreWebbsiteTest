@@ -130,10 +130,10 @@
 
     const quests = [
       { id: 1, img: "Halloween-Picture-1.png", code: "7206", unlocked: true },
-      { id: 2, img: "Halloween-Picture-2.png", code: "pumpa321", unlocked: false },
-      { id: 3, img: "Halloween-Picture-3.png", code: "magi555", unlocked: false },
-      { id: 4, img: "Halloween-Picture-4.png", code: "bat999", unlocked: false },
-      { id: 5, img: "Halloween-Picture-5.png", code: "katt666", unlocked: false },
+      { id: 2, img: "Halloween-Picture-2.png", code: "", unlocked: false },
+      { id: 3, img: "Halloween-Picture-3.png", code: "", unlocked: false },
+      { id: 4, img: "Halloween-Picture-4.png", code: "", unlocked: false },
+      { id: 5, img: "Halloween-Picture-5.png", code: "", unlocked: false },
     ];
 
     let currentQuest = null;
@@ -143,7 +143,7 @@
       const quest = quests.find(q => q.id === id);
       currentQuest = quest;
       questTitle.textContent = "Quest " + id;
-      questInstructions.textContent = "Instruktioner: Fyll i rätt kod för att klara uppdraget!";
+      questInstructions.textContent = "Någonstans på hemsidan finns en gömd kod – fyra siffror – som låser upp ditt första quest. Leta noga bland texterna och bilderna… när du hittar den, skriv in den här och klicka på Bekräfta.";
       questCodeInput.value = "";
       questPopup.style.display = "flex";
     }
