@@ -1,263 +1,197 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Island Of Vehicles</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Eerie&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Island Of Vehicles - Halloween Edition</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Eerie&display=swap');
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
-        .flicker { animation: flicker 2s infinite; }
-        .hover-scale { transition: transform 0.3s ease; }
-        .hover-scale:hover { transform: scale(1.05); }
-        .bg-gradient-hero {
-            background: linear-gradient(135deg, #2d0b3a, #ff4500);
-            background-image: url('https://www.transparenttextures.com/patterns/batman.png');
-            background-blend-mode: overlay;
-        }
-        .card-shadow { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
-        body {
-            font-family: 'Eerie', sans-serif;
-            background: url('https://www.transparenttextures.com/patterns/skull.png'), #1a1a1a;
-            color: #f5f5f5;
-        }
-        h1, h2, h3 {
-            font-family: 'Creepster', cursive;
-            color: #ff4500;
-            text-shadow: 0 0 10px rgba(255, 69, 0, 0.8);
-        }
-        nav {
-            background: #2d0b3a;
-            border-bottom: 2px solid #ff4500;
-        }
-        button, .btn {
-            background: #ff4500 !important;
-            border: 2px solid #000 !important;
-            color: #000 !important;
-            transition: all 0.3s ease;
-        }
-        button:hover, .btn:hover {
-            background: #e03c00 !important;
-            transform: scale(1.05);
-        }
-        input, .form-input {
-            background: #333 !important;
-            color: #fff !important;
-            border: 1px solid #ff4500 !important;
-        }
-        .form-input:focus {
-            box-shadow: 0 0 10px #ff4500 !important;
-        }
-    </style>
+body {
+  font-family: 'Eerie', sans-serif;
+  background: url('https://www.transparenttextures.com/patterns/skull.png'), #1a1a1a;
+  color: #f5f5f5;
+}
+
+h1,h2,h3 {
+  font-family: 'Creepster', cursive;
+  color: #ff4500;
+  text-shadow: 0 0 10px rgba(255,69,0,0.8);
+}
+
+nav {
+  background: #2d0b3a;
+  border-bottom: 2px solid #ff4500;
+}
+
+button, .btn {
+  background: #ff4500 !important;
+  border: 2px solid #000 !important;
+  color: #000 !important;
+  transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover { background: #e03c00 !important; transform: scale(1.05); }
+
+input, .form-input {
+  background: #333 !important;
+  color: #fff !important;
+  border: 1px solid #ff4500 !important;
+}
+
+.form-input:focus {
+  box-shadow: 0 0 10px #ff4500 !important;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@keyframes flicker {
+  0%,100% { opacity:1; }
+  50% { opacity:0.7; }
+}
+
+.animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.flicker { animation: flicker 2s infinite; }
+
+.bg-gradient-hero {
+  background: linear-gradient(135deg, #2d0b3a, #ff4500);
+  background-image: url('https://www.transparenttextures.com/patterns/batman.png');
+  background-blend-mode: overlay;
+}
+
+.card-shadow { box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+.hover-scale { transition: transform 0.3s ease; }
+.hover-scale:hover { transform: scale(1.05); }
+</style>
 </head>
 <body class="font-sans antialiased">
-    <!-- Navigation -->
-    <nav class="shadow-lg fixed w-full z-10">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-3xl font-extrabold flicker">Windskore</h1>
-            <div class="space-x-6 text-lg font-medium">
-                <a href="/index.html" class="text-orange-300 hover:text-orange-500 transition-colors">Startsida</a>
-            </div>
+
+<!-- Navigation -->
+<nav class="shadow-lg fixed w-full z-10">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-3xl font-extrabold flicker">Windskore</h1>
+    <div class="space-x-6 text-lg font-medium">
+      <a href="/index.html" class="text-orange-300 hover:text-orange-500 transition-colors">Startsida</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Banner -->
+<section class="min-h-screen flex items-center justify-center bg-gradient-hero pt-16">
+  <div class="container mx-auto text-center px-4 animate-fade-in">
+    <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight flicker">Island Of Vehicles</h2>
+    <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-orange-200">Upptäck en mystisk ö!</p>
+    <a href="#notify" class="inline-block btn font-semibold px-8 py-4 rounded-full text-lg hover-scale">Få Notis Vid Release</a>
+  </div>
+</section>
+
+<!-- Trailer Section -->
+<section id="trailer" class="py-20 bg-gray-900">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Spöklik Trailer</h2>
+    <div class="flex justify-center items-center" style="height:400px;width:100%;">
+      <div style="padding:56.25% 0 0 0;position:relative;width:100%;">
+        <iframe src="https://player.vimeo.com/video/1130266443?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                title="Island Of Vehicles Trailer 1"></iframe>
+        <script src="https://player.vimeo.com/api/player.js"></script>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-gray-800">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Om Island Of Vehicles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="animate-fade-in">
+        <h3 class="text-2xl font-semibold mb-4">Utforska en Öppen Värld</h3>
+        <p class="text-orange-200 mb-4">Detta spel tar dig till en ö-värld fylld av hemligheter. Kör bilar genom olika miljöer, från stränder till städer.</p>
+      </div>
+      <div class="animate-fade-in" style="animation-delay:0.2s;">
+        <h3 class="text-2xl font-semibold mb-4">Skrämmande Story</h3>
+        <p class="text-orange-200 mb-4">Delta i en berättelse där du måste stoppa förstörelsen av staden.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- System Requirements Section -->
+<section id="requirements" class="py-20 bg-gray-800">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Systemkrav</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-gray-900 rounded-xl p-8 card-shadow animate-fade-in">
+        <h3 class="text-2xl font-semibold mb-4">Minimum</h3>
+        <ul class="text-orange-200 list-disc pl-5">
+          <li>OS: Oklart</li>
+          <li>Processor: Oklart</li>
+          <li>Minne: Oklart</li>
+          <li>Grafik: Oklart</li>
+          <li>Lagring: Oklart</li>
+        </ul>
+      </div>
+      <div class="bg-gray-900 rounded-xl p-8 card-shadow animate-fade-in" style="animation-delay:0.2s;">
+        <h3 class="text-2xl font-semibold mb-4">Rekommenderat</h3>
+        <ul class="text-orange-200 list-disc pl-5">
+          <li>OS: Oklart</li>
+          <li>Processor: Oklart</li>
+          <li>Minne: Oklart</li>
+          <li>Grafik: Oklart</li>
+          <li>Lagring: Oklart</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Notification Form Section -->
+<section id="notify" class="py-20 bg-gray-900">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Få Notis Vid Release</h2>
+    <div class="flex justify-center">
+      <form action="https://formspree.io/f/xwprkznr" method="POST" class="w-full max-w-lg bg-gray-800 p-8 rounded-xl card-shadow space-y-6 animate-fade-in">
+        <div>
+          <label for="fullname" class="block text-orange-200 font-medium mb-2">För- och Efternamn*</label>
+          <input type="text" id="fullname" name="fullname" required class="form-input w-full px-4 py-2 rounded-lg">
         </div>
-    </nav>
-
-    <!-- Hero Banner -->
-    <section class="min-h-screen flex items-center justify-center bg-gradient-hero pt-16">
-        <div class="container mx-auto text-center px-4 animate-fade-in">
-            <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight flicker">Island Of Vehicles</h2>
-            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-orange-200">Upptäck en mystisk ö!</p>
-            <a href="#notify" class="inline-block btn font-semibold px-8 py-4 rounded-full text-lg hover-scale">Få Notis Vid Release</a>
+        <div>
+          <label for="email" class="block text-orange-200 font-medium mb-2">Email*</label>
+          <input type="email" id="email" name="email" required class="form-input w-full px-4 py-2 rounded-lg">
         </div>
-    </section>
+        <button type="submit" class="w-full font-semibold px-6 py-3 rounded-lg">Skicka</button>
+      </form>
+    </div>
+  </div>
+</section>
 
-    <!-- Trailer Section -->
-    <section id="trailer" class="py-20 bg-gray-900">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Spöklik Trailer</h2>
-            <div class="flex justify-center items-center" style="height: 400px; width: 100%;">
-                <div style="padding:56.25% 0 0 0;position:relative;width:100%;">
-                    <iframe 
-                        src="https://player.vimeo.com/video/1130266443?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                        frameborder="0" 
-                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" 
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-                        title="Island Of Vehicles Trailer 1">
-                    </iframe>
-                </div>
-                <script src="https://player.vimeo.com/api/player.js"></script>
-            </div>
-        </div>
-    </section>
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8">
+  <div class="container mx-auto px-4 text-center">
+    <h3 class="text-2xl font-bold mb-4 flicker">Windskore</h3>
+    <p class="text-orange-200 mb-4">Hedemora</p>
+    <p class="text-orange-300 mt-6">©2025 Windskore.</p>
+  </div>
+</footer>
 
-    <!-- About Game Section -->
-    <section id="about" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Om Island Of Vehicles</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="animate-fade-in">
-                    <h3 class="text-2xl font-semibold mb-4">Utforska en Öppen Värld</h3>
-                    <p class="text-orange-200 mb-4">Detta spel tar dig till en ö-värld fylld av hemligheter. Kör bilar genom olika miljöer, från stränder till städer.</p>
-                </div>
-                <div class="animate-fade-in" style="animation-delay: 0.2s;">
-                    <h3 class="text-2xl font-semibold mb-4">Skrämmande Story</h3>
-                    <p class="text-orange-200 mb-4">Delta i en berättelse där du måste stoppa förstörelsen av en staden.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- System Requirements Section -->
-    <section id="requirements" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Systemkrav</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-gray-900 rounded-xl p-8 card-shadow animate-fade-in">
-                    <h3 class="text-2xl font-semibold mb-4">Minimum</h3>
-                    <ul class="text-orange-200 list-disc pl-5">
-                        <li>OS: Oklart</li>
-                        <li>Processor: Oklart</li>
-                        <li>Minne: Oklart</li>
-                        <li>Grafik: Oklart</li>
-                        <li>Lagring: Oklart</li>
-                    </ul>
-                </div>
-                <div class="bg-gray-900 rounded-xl p-8 card-shadow animate-fade-in" style="animation-delay: 0.2s;">
-                    <h3 class="text-2xl font-semibold mb-4">Rekommenderat</h3>
-                    <ul class="text-orange-200 list-disc pl-5">
-                        <li>OS: Oklart</li>
-                        <li>Processor: Oklart</li>
-                        <li>Minne: Oklart</li>
-                        <li>Grafik: Oklart</li>
-                        <li>Lagring: Oklart</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Notification Form Section -->
-    <section id="notify" class="py-20 bg-gray-900">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in flicker">Få Notis Vid Release</h2>
-            <div class="flex justify-center">
-                <form action="https://formspree.io/f/xwprkznr" method="POST" class="w-full max-w-lg bg-gray-800 p-8 rounded-xl card-shadow space-y-6 animate-fade-in">
-                    <div>
-                        <label for="fullname" class="block text-orange-200 font-medium mb-2">För- och Efternamn*</label>
-                        <input type="text" id="fullname" name="fullname" required class="form-input w-full px-4 py-2 rounded-lg">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-orange-200 font-medium mb-2">Email*</label>
-                        <input type="email" id="email" name="email" required class="form-input w-full px-4 py-2 rounded-lg">
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <input type="checkbox" id="other_news" name="other_news" class="h-4 w-4">
-                        <label for="other_news" class="text-orange-200">Jag vill ha nyheter om andra kusliga saker</label>
-                    </div>
-                    <button type="submit" class="w-full font-semibold px-6 py-3 rounded-lg">Skicka</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pre Order -->
-    <section id="preorder" class="py-20 bg-gray-900">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-6 animate-fade-in flicker">
-                🎃 Förbeställ Island Of Vehicles NU – spara 50 kr!<br>
-                Ordinarie pris: 249 kr – Erbjudandepris: 199 kr<br>
-                ⚡ Erbjudandet gäller till 1 november 2025
-            </h2>
-            <p class="text-center text-orange-200 mb-12">
-                Hur det funkar: Genom att skicka in detta formulär vet Windskore dina uppgifter och kan skicka ett mail till dig med instruktioner om hur du ska betala.
-            </p>
-            <div class="flex justify-center">
-                <form action="https://formspree.io/f/xwprkznr" method="POST" class="w-full max-w-lg bg-gray-800 p-8 rounded-xl card-shadow space-y-6 animate-fade-in">
-                    <div>
-                        <label for="fullname" class="block text-orange-200 font-medium mb-2">För- och Efternamn*</label>
-                        <input type="text" id="fullname" name="fullname" required class="form-input w-full px-4 py-2 rounded-lg">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-orange-200 font-medium mb-2">Email*</label>
-                        <input type="email" id="email" name="email" required class="form-input w-full px-4 py-2 rounded-lg">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-orange-200 font-medium mb-2">Telefonnummer*</label>
-                        <input type="tel" id="phone" name="phone" required class="form-input w-full px-4 py-2 rounded-lg">
-                    </div>
-                    <div>
-                        <label for="address" class="block text-orange-200 font-medium mb-2">Adress (valfritt)</label>
-                        <input type="text" id="address" name="address" class="form-input w-full px-4 py-2 rounded-lg">
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <input type="checkbox" id="Accept Terms Of Service and Sekretesspolicy" name="Accept Terms Of Service and Sekretesspolicy" class="h-4 w-4">
-                        <label for="Accept Terms Of Service and Sekretesspolicy" class="text-orange-200">Jag godkänner Windskores Terms Of Service och Sekretesspolicy</label>
-                    </div>
-                    <button type="submit" class="w-full font-semibold px-6 py-3 rounded-lg">Skicka</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <h3 class="text-2xl font-bold mb-4 flicker">Windskore</h3>
-            <p class="text-orange-200 mb-4">Hedemora</p>
-            <div class="space-x-4">
-                <a href="https://docs.google.com/document/d/1S52kEOqoF9yUc-7IgmE3uKT3EyfJ0JaX5Tgnfqp4qU0/edit?usp=sharing" class="text-orange-200 hover:text-orange-400 transition-colors">Terms Of Service</a>
-                <a href="https://docs.google.com/document/d/1QdNGmLffcUuZu21qLqdQPWm4gd0VK0EbiEBbaqy8BbU/edit?usp=sharing" class="text-orange-200 hover:text-orange-400 transition-colors">Sekretesspolicy</a>
-            </div>
-            <p class="text-orange-200 mt-4">support@windskore.se</p>
-            <p class="text-orange-300 mt-6">©2025 Windskore.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Trigger animations on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                }
-            });
-        });
-        document.querySelectorAll('.animate-fade-in').forEach(el => observer.observe(el));
-    </script>
-
-    <!-- Start of Tawk.to Script -->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        (function() {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/6800b82fc5e333190b5b7845/1ip1cuv4g';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!-- End of Tawk.to Script -->
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('animate-fade-in'); } });
+});
+document.querySelectorAll('.animate-fade-in').forEach(el=>observer.observe(el));
+</script>
 </body>
 </html>
