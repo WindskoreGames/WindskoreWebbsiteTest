@@ -38,21 +38,25 @@
   </div>
 </nav>
 
-  <!-- Login Popup -->
-  <div id="accountPopup" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
-    <div class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full relative animate-fade-in">
-      <button id="closePopup" class="absolute top-2 right-3 text-orange-400 text-2xl hover:text-orange-200">✖</button>
-      <h2 class="text-3xl font-bold mb-6 text-center">Logga in eller skapa konto</h2>
-      <input id="email" type="email" placeholder="E-post" class="w-full p-3 mb-4 rounded bg-gray-700 text-white">
-      <input id="password" type="password" placeholder="Lösenord" class="w-full p-3 mb-4 rounded bg-gray-700 text-white">
-      <div class="flex justify-between">
-        <button id="registerBtn" class="px-4 py-2 bg-orange-600 rounded hover:bg-orange-700">Skapa konto</button>
-        <button id="loginBtn" class="px-4 py-2 bg-orange-600 rounded hover:bg-orange-700">Logga in</button>
-      </div>
-      <p id="statusMsg" class="mt-4 text-orange-300 text-center"></p>
-      <button id="logoutBtn" class="mt-6 px-4 py-2 bg-orange-600 rounded hidden w-full hover:bg-orange-700">Logga ut</button>
-    </div>
-  </div>
+<script>
+  // Kontrollera om användaren är inloggad innan man går till Halloween Quest
+  const accountBtn = document.getElementById('accountBtn');
+  const questLink = document.getElementById('halloweenQuest');
+
+  questLink.addEventListener('click', (e) => {
+    const loggedIn = localStorage.getItem("loggedInUser");
+    if (!loggedIn) {
+      e.preventDefault();
+      alert("Du måste vara inloggad för att nå denna sida.");
+    }
+  });
+
+  // Gubben 👤 öppnar popup-login
+  const loginPopup = document.getElementById("account"); // Den popup vi redan har i index.html
+  accountBtn.addEventListener("click", () => {
+    loginPopup.style.display = "block";
+  });
+</script>
 
   <!-- Home Section -->
   <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-hero pt-16">
@@ -195,4 +199,5 @@
   </script>
 
 </body>
+
 </html>
