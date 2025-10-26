@@ -34,7 +34,7 @@
       <input type="text" id="questCodeInput" placeholder="Skriv kod här">
       <br><br>
       <button onclick="checkCode()">Bekräfta</button>
-      <button onclick="closePopup()">Stäng</button>
+      <button onclick="closeQuestPopup()">Stäng</button>
     </div>
   </div>
 
@@ -56,6 +56,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBp9mtBNZAt4PLVPV0ReJ1TmdhfsuArXZI",
@@ -69,6 +70,7 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
@@ -79,6 +81,7 @@
     const accountPopup = document.getElementById("accountPopup");
     const userStatus = document.getElementById("userStatus");
 
+    let userUID = null;
     let quests = [
       { id:1,img:"Halloween-Picture-1.png",code:"7206" },
       { id:2,img:"Halloween-Picture-2.png",code:"pumpa321" },
@@ -87,87 +90,112 @@
       { id:5,img:"Halloween-Picture-5.png",code:"katt666" }
     ];
 
-    // Här kan du själv ändra vilka quests som är upplåsta (array med quest id:n)
-    let unlockedQuests = [2]; // Quest 1 är upplåst, 2-5 är låsta
+    let unlockedQuests = [1,2]; // Exempel: quest 1 och 2 är upplåsta
+    let completedQuests = [];
 
-    let isLoggedIn = false;
-
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user)=>{
       if(user){
-        isLoggedIn = true;
+        userUID = user.uid;
+        statusMsg.textContent = `Inloggad som ${user.email}`;
         logoutBtn.style.display = "block";
-        statusMsg.textContent = `Du är inloggad som ${user.email}`;
-        userStatus.textContent = `Inloggad: ${user.email}`;
         accountPopup.style.display = "none";
+        userStatus.textContent = `Inloggad: ${user.email}`;
+        
+        // Hämta sparade quests från Firestore
+        const userRef = doc(db,"users",user.uid);
+        const docSnap = await getDoc(userRef);
+        if(docSnap.exists()){
+          completedQuests = docSnap.data().completedQuests || [];
+        } else {
+          await setDoc(userRef,{ email:user.email, completedQuests:[], badges:[], created:new Date().toISOString() });
+        }
+
         initQuests();
       } else {
-        isLoggedIn = false;
-        logoutBtn.style.display = "none";
+        userUID = null;
+        completedQuests = [];
         statusMsg.textContent = "";
+        logoutBtn.style.display = "none";
         userStatus.textContent = "";
         accountPopup.style.display = "flex"; // öppna popup
       }
     });
 
-    registerBtn.addEventListener("click", async () => {
-      try { await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value); statusMsg.textContent="✅ Konto skapat!"; }
-      catch(error){ statusMsg.textContent="❌ "+error.message; }
+    registerBtn.addEventListener("click", async ()=>{
+      try{
+        const userCredential = await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+        userUID = userCredential.user.uid;
+        await setDoc(doc(db,"users",userUID),{ email:userCredential.user.email, completedQuests:[], badges:[], created:new Date().toISOString() });
+        statusMsg.textContent="✅ Konto skapat! Du är nu inloggad.";
+      } catch(error){ statusMsg.textContent="❌ "+error.message; }
     });
 
-    loginBtn.addEventListener("click", async () => {
-      try { await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value); statusMsg.textContent="✅ Inloggad!"; }
-      catch(error){ statusMsg.textContent="❌ "+error.message; }
+    loginBtn.addEventListener("click", async ()=>{
+      try{
+        await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+        statusMsg.textContent="✅ Inloggad!";
+      } catch(error){ statusMsg.textContent="❌ "+error.message; }
     });
 
-    logoutBtn.addEventListener("click", async () => { await signOut(auth); });
+    logoutBtn.addEventListener("click", async ()=>{
+      await signOut(auth);
+      statusMsg.textContent="👋 Du är nu utloggad.";
+    });
 
     function initQuests(){
       const questContainer = document.getElementById("questContainer");
       questContainer.innerHTML = "";
 
-      const completed = JSON.parse(localStorage.getItem("completedQuests") || "[]");
-
-      quests.forEach((q) => {
+      quests.forEach(q=>{
         const div = document.createElement("div");
-        div.className="quest";
+        div.className = "quest";
 
-        let status = completed.includes(q.id) ? "✅ Avklarat" :
+        let status = completedQuests.includes(q.id) ? "✅ Avklarat" :
                      unlockedQuests.includes(q.id) ? `<button onclick="openQuest(${q.id})">Gör Quest</button>` :
                      "🔒 Låst";
 
-        div.innerHTML=`<img src="${q.img}" alt="Quest ${q.id}"><p id="status-${q.id}">${status}</p>`;
+        div.innerHTML = `<img src="${q.img}" alt="Quest ${q.id}"><p id="status-${q.id}">${status}</p>`;
         questContainer.appendChild(div);
       });
+    }
 
-      window.openQuest = function(id){
-        if(!unlockedQuests.includes(id)){
-          alert("Denna quest är låst!");
-          return;
+    window.openQuest = function(id){
+      if(!unlockedQuests.includes(id)){
+        alert("Denna quest är låst!");
+        return;
+      }
+
+      const quest = quests.find(q=>q.id===id);
+      document.getElementById("questTitle").textContent = "Quest " + id;
+      document.getElementById("questInstructions").textContent = "Instruktioner: (du fyller i här senare)";
+      const input = document.getElementById("questCodeInput");
+      input.value="";
+      input.dataset.id=id;
+      document.getElementById("questPopup").style.display = "flex";
+    };
+
+    window.closeQuestPopup = function(){ document.getElementById("questPopup").style.display = "none"; };
+
+    window.checkCode = async function(){
+      const input = document.getElementById("questCodeInput");
+      const id = parseInt(input.dataset.id);
+      const quest = quests.find(q=>q.id===id);
+
+      if(input.value.trim() === quest.code){
+        if(!completedQuests.includes(id)) completedQuests.push(id);
+        document.getElementById("status-"+id).innerHTML = "✅ Avklarat";
+        closeQuestPopup();
+
+        if(userUID){
+          const userRef = doc(db,"users",userUID);
+          await updateDoc(userRef, { completedQuests: arrayUnion(id) });
         }
 
-        const quest = quests.find(q=>q.id===id);
-        document.getElementById("questTitle").textContent = "Quest " + id;
-        document.getElementById("questInstructions").textContent = "Instruktioner: (du fyller i här senare)";
-        const input = document.getElementById("questCodeInput");
-        input.value="";
-        input.dataset.id=id;
-        document.getElementById("questPopup").style.display="flex";
-      };
-
-      window.closePopup = function(){ document.getElementById("questPopup").style.display="none"; };
-      window.checkCode = function(){
-        const input=document.getElementById("questCodeInput");
-        const id=parseInt(input.dataset.id);
-        const quest=quests.find(q=>q.id===id);
-        if(input.value.trim()===quest.code){
-          const done=JSON.parse(localStorage.getItem("completedQuests")||"[]");
-          if(!done.includes(id)) done.push(id);
-          localStorage.setItem("completedQuests",JSON.stringify(done));
-          document.getElementById("status-"+id).innerHTML="✅ Avklarat";
-          closePopup();
-        } else { alert("Fel kod! Försök igen."); }
-      };
-    }
+      } else {
+        alert("Fel kod! Försök igen.");
+      }
+    };
   </script>
+
 </body>
 </html>
