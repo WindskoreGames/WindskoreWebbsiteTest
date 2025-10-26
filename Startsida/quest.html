@@ -57,6 +57,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebas
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBp9mtBNZAt4PLVPV0ReJ1TmdhfsuArXZI",
   authDomain: "windskore.firebaseapp.com",
@@ -80,6 +81,9 @@ const statusMsg = document.getElementById("statusMsg");
 const accountPopup = document.getElementById("accountPopup");
 const userStatus = document.getElementById("userStatus");
 
+let currentUser = null;
+
+// Questdata
 let quests = [
   { id:1,img:"Halloween-Picture-1.png",code:"7206" },
   { id:2,img:"Halloween-Picture-2.png",code:"pumpa321" },
@@ -88,10 +92,11 @@ let quests = [
   { id:5,img:"Halloween-Picture-5.png",code:"katt666" }
 ];
 
-let unlockedQuests = [1]; // Quest 1 upplåst, övriga låsta
-let currentUser = null;
+let defaultUnlocked = [1]; // Quest 1 är upplåst från början
+let unlockedQuests = [...defaultUnlocked];
 
-onAuthStateChanged(auth, async (user) => {
+// Auth state
+onAuthStateChanged(auth, async (user)=>{
   if(user){
     currentUser = user;
     userStatus.textContent = `Inloggad: ${user.email}`;
@@ -102,9 +107,10 @@ onAuthStateChanged(auth, async (user) => {
     const docRef = doc(db,"users",user.uid);
     const docSnap = await getDoc(docRef);
     if(!docSnap.exists()){
-      await setDoc(docRef,{completedQuests:[],unlockedQuests:unlockedQuests});
+      await setDoc(docRef,{completedQuests:[],unlockedQuests:defaultUnlocked});
+      unlockedQuests = [...defaultUnlocked];
     } else {
-      unlockedQuests = docSnap.data().unlockedQuests || unlockedQuests;
+      unlockedQuests = docSnap.data().unlockedQuests || [...defaultUnlocked];
     }
 
     initQuests();
@@ -113,42 +119,39 @@ onAuthStateChanged(auth, async (user) => {
     userStatus.textContent = "Ej inloggad";
     logoutBtn.style.display="none";
     accountPopup.style.display="flex";
+    initQuests();
   }
 });
 
-registerBtn.addEventListener("click", async () => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
-    statusMsg.textContent="✅ Konto skapat!";
-  } catch(error){ statusMsg.textContent="❌ "+error.message; }
+// Register/Login
+registerBtn.addEventListener("click", async ()=>{
+  try { await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value); statusMsg.textContent="✅ Konto skapat!"; }
+  catch(error){ statusMsg.textContent="❌ "+error.message; }
 });
 
-loginBtn.addEventListener("click", async () => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
-    statusMsg.textContent="✅ Inloggad!";
-  } catch(error){ statusMsg.textContent="❌ "+error.message; }
+loginBtn.addEventListener("click", async ()=>{
+  try { await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value); statusMsg.textContent="✅ Inloggad!"; }
+  catch(error){ statusMsg.textContent="❌ "+error.message; }
 });
 
-logoutBtn.addEventListener("click", async () => { await signOut(auth); });
+logoutBtn.addEventListener("click", async ()=>{ await signOut(auth); });
 
+// Init quests
 function initQuests(){
-  const questContainer = document.getElementById("questContainer");
-  questContainer.innerHTML="";
+  const container = document.getElementById("questContainer");
+  container.innerHTML="";
 
   quests.forEach(q=>{
     const div = document.createElement("div");
     div.className="quest";
-
     const unlocked = unlockedQuests.includes(q.id);
-
-    const btn = unlocked ? `<button onclick="openQuest(${q.id})">Gör Quest</button>` : "🔒 Låst";
-
-    div.innerHTML=`<img src="${q.img}" alt="Quest ${q.id}"><p id="status-${q.id}">${btn}</p>`;
-    questContainer.appendChild(div);
+    const btnHTML = unlocked ? `<button onclick="openQuest(${q.id})">Gör Quest</button>` : "🔒 Låst";
+    div.innerHTML = `<img src="${q.img}" alt="Quest ${q.id}"><p id="status-${q.id}">${btnHTML}</p>`;
+    container.appendChild(div);
   });
 }
 
+// Quest popup
 window.openQuest = function(id){
   if(!unlockedQuests.includes(id)){ alert("Quest är låst!"); return; }
   const quest = quests.find(q=>q.id===id);
@@ -156,7 +159,7 @@ window.openQuest = function(id){
   document.getElementById("questInstructions").textContent = "Skriv koden för att slutföra questen.";
   const input = document.getElementById("questCodeInput");
   input.value="";
-  input.dataset.id=id;
+  input.dataset.id = id;
   document.getElementById("questPopup").style.display="flex";
 };
 
@@ -166,11 +169,12 @@ window.checkCode = async function(){
   const input = document.getElementById("questCodeInput");
   const id = parseInt(input.dataset.id);
   const quest = quests.find(q=>q.id===id);
+
   if(input.value.trim()===quest.code){
-    const userRef = doc(db,"users",currentUser.uid);
-    await updateDoc(userRef,{
-      completedQuests: arrayUnion(id)
-    });
+    if(currentUser){
+      const userRef = doc(db,"users",currentUser.uid);
+      await updateDoc(userRef,{completedQuests: arrayUnion(id)});
+    }
     document.getElementById("status-"+id).innerHTML="✅ Avklarat";
     closePopup();
   } else {
@@ -178,5 +182,6 @@ window.checkCode = async function(){
   }
 };
 </script>
+
 </body>
 </html>
